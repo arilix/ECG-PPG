@@ -1,6 +1,6 @@
-# ECG-PPG — Monitor EKG & PPG Portabel (Purwarupa Android)
+# ECG-PPG — Monitor EKG & PPG Portabel (Purwarupa Android & iOS)
 
-Purwarupa sistem pemantauan **EKG satu kanal (AD8232)** dan **PPG dua kanal (MAX30102)** berbasis **ESP32**, dengan aplikasi **Android native (Kotlin)** untuk menampilkan grafik *real-time*, menghitung detak jantung, merekam sesi ke CSV, dan memutar ulang rekaman.
+Purwarupa sistem pemantauan **EKG satu kanal (AD8232)** dan **PPG dua kanal (MAX30102)** berbasis **ESP32**, dengan aplikasi **Android native (Kotlin)** dan **iOS native (SwiftUI)** untuk menampilkan grafik *real-time*, menghitung detak jantung, merekam sesi ke CSV, dan memutar ulang rekaman.
 
 > **Bukan alat medis.** Proyek pembelajaran/penelitian. Tidak ada diagnosis, klaim akurasi klinis, maupun alarm medis. Tidak memakai *machine learning* — semua pengolahan sinyal bersifat klasik (DSP).
 
@@ -11,6 +11,7 @@ Perangkat keras belum dirakit, sehingga aplikasi dikembangkan dan diuji lebih du
 | Bagian | Status |
 |---|---|
 | Aplikasi Android (live, rekam CSV, riwayat, replay, salin ke folder, tema) | Selesai (data dummy) |
+| Aplikasi iOS (fitur sama, SwiftUI, iOS 17+) | Selesai (data dummy), diuji di simulator iPhone 15 iOS 26.5 |
 | DSP: R-peak, BPM ECG/PPG, interval RR, RMSSD | Selesai, divalidasi pada dataset |
 | Pencarian perangkat BLE | Simulasi (antarmuka `DeviceScanner` siap diganti) |
 | Login Google / pencadangan Drive | Simulasi / rencana |
@@ -35,6 +36,16 @@ Perangkat keras belum dirakit, sehingga aplikasi dikembangkan dan diuji lebih du
 |---|---|---|
 | ![Riwayat](doc/screenshot/06_riwayat.png) | ![Detail](doc/screenshot/07_detail.png) | ![Gelap](doc/screenshot/08_live_gelap.png) |
 
+### iOS (simulator iPhone 15, iOS 26.5)
+
+| Live (merekam) | Perangkat | Pengaturan |
+|---|---|---|
+| <img src="doc/screenshot/ios/01_live.png" width="240"> | <img src="doc/screenshot/ios/02_perangkat.png" width="240"> | <img src="doc/screenshot/ios/03_pengaturan.png" width="240"> |
+
+| Riwayat | Detail rekaman | Mode gelap |
+|---|---|---|
+| <img src="doc/screenshot/ios/04_riwayat.png" width="240"> | <img src="doc/screenshot/ios/05_detail.png" width="240"> | <img src="doc/screenshot/ios/06_live_gelap.png" width="240"> |
+
 ## Hasil validasi algoritma
 
 Detektor yang sama dengan di aplikasi, diuji pada dataset publik (skrip dan hasil mentah di [`doc/validasi/`](doc/validasi)):
@@ -57,6 +68,30 @@ Prasyarat: Android Studio (JDK 17), Android SDK. Aplikasi memakai SDK minimum 24
 
 Atau buka folder ini di Android Studio dan jalankan konfigurasi `app`. Tidak ada pustaka pihak ketiga tambahan (grafik digambar dengan `Canvas`).
 
+### iOS
+
+Prasyarat: macOS dengan Xcode 16 atau lebih baru (diuji dengan Xcode 27.1). Target minimum iOS 17.
+
+```bash
+open ios/ECGPPG.xcodeproj        # pilih skema ECGPPG + simulator iPhone 15, lalu Run (⌘R)
+
+# atau lewat terminal:
+xcodebuild -project ios/ECGPPG.xcodeproj -scheme ECGPPG \
+  -destination 'platform=iOS Simulator,name=iPhone 15' build
+```
+
+**IPA tanpa tanda tangan** tersedia di [`release/ECGPPG-unsigned.ipa`](release). IPA ini tidak bisa langsung dipasang di iPhone; tanda tangani dulu (mis. dengan AltStore/Sideloadly atau `codesign` + provisioning profile milik Anda). Untuk membuat ulang:
+
+```bash
+xcodebuild -project ios/ECGPPG.xcodeproj -scheme ECGPPG -configuration Release \
+  -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath ios/build \
+  CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+mkdir -p Payload && cp -R ios/build/Build/Products/Release-iphoneos/ECGPPG.app Payload/
+zip -qry release/ECGPPG-unsigned.ipa Payload && rm -rf Payload
+```
+
+Rekaman di iOS tersimpan di folder Documents aplikasi, sehingga bisa dibuka di app **Files** (*On My iPhone › ECG PPG Monitor › recordings*).
+
 ### Membuat ulang aset data dummy
 
 Aset di `app/src/main/assets/dummy/` adalah kutipan 90 detik dari dataset publik yang sudah dikonversi (ECG 250 Hz, PPG 100 Hz). Untuk membuat ulang dari berkas zip dataset:
@@ -77,6 +112,12 @@ app/src/main/java/com/example/myapplication/
 └── ui/      # WaveformView, Live/Devices/History/Settings, DetailActivity
 app/src/main/assets/dummy/   # data dummy (MIT-BIH, BIDMC)
 app/src/test/                # uji unit DSP
+ios/ECGPPG.xcodeproj         # proyek Xcode versi iOS
+ios/ECGPPG/
+├── Core/    # Config+Series, Dsp, SignalSource, DeviceScanner, Recording, Prefs, MonitorEngine
+├── Views/   # Live/Devices/History/Detail/Settings, WaveformChart, Theme
+└── Resources/dummy/         # salinan data dummy
+release/                     # ECGPPG-unsigned.ipa (build iOS tanpa tanda tangan)
 tools/                       # skrip pembuat aset dummy
 doc/                         # dokumentasi, proposal, screenshot, skrip validasi
 ```

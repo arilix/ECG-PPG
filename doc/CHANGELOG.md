@@ -2,6 +2,22 @@
 
 Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 
+## 2026-11-16 — Versi iOS (SwiftUI)
+
+**Ditambah**
+- Folder `ios/`: proyek Xcode `ECGPPG.xcodeproj` (SwiftUI, iOS 17+, iPhone & iPad, tanpa dependensi pihak ketiga). Port fitur Android: Live (grafik ECG/PPG IR/PPG Red, BPM ECG/PPG, RMSSD, lead-off, jari, REC), Perangkat (pemindaian BLE simulasi), Riwayat + Detail (replay CSV dengan cubit/geser/ketuk-dua-kali, sinkron antar-grafik, Bagikan, Hapus), Pengaturan (akun Google simulasi, folder salinan, data dummy, simulasi kondisi, tema Sistem/Terang/Gelap).
+- `ios/ECGPPG/Core/`: `Config.swift` (+ `Series`), `Dsp.swift` (port 1:1 `RPeakDetector`, `PpgPeakDetector`, `RateTracker`), `SignalSource.swift`, `DeviceScanner.swift`, `Recording.swift` (CSV/metadata format versi 1 yang sama, `CsvLoader`, `StorageExporter`), `Prefs.swift`, `MonitorEngine.swift`.
+- `ios/ECGPPG/Views/`: `LiveView`, `DevicesView`, `HistoryView`, `DetailView`, `SettingsView`, `WaveformChart` (Canvas; decimation min/max), `Theme` (palet sama dengan Android).
+- Aset dummy disalin ke `ios/ECGPPG/Resources/dummy/`; ikon aplikasi 1024 px dari `ic_launcher-playstore.png`.
+- `release/ECGPPG-unsigned.ipa`: hasil build Release untuk perangkat (arm64) **tanpa tanda tangan**.
+- `doc/screenshot/ios/`: tangkapan layar dari simulator iPhone 15 (iOS 26.5).
+
+**Perbedaan dengan Android**
+- Pengaturan dibuka sebagai *sheet* dari tombol ☰ (bukan drawer).
+- Rekaman di `Documents/recordings` aplikasi, sehingga juga terlihat di app **Files** (*On My iPhone › ECG PPG Monitor*).
+- Folder salinan dipilih lewat pemilih folder Files (security-scoped bookmark), pengganti Storage Access Framework.
+- Metadata JSON ditulis dengan kunci terurut abjad; isi kolom sama.
+
 ## 2026-11-16 — Ikon aplikasi
 
 **Ditambah / diubah**

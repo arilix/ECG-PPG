@@ -1,5 +1,7 @@
 # Arsitektur
 
+Versi iOS dijelaskan di bagian [Versi iOS](#versi-ios-ios) di akhir dokumen.
+
 Aplikasi Android native (Kotlin, XML Views, Material 3), package `com.example.myapplication`, minSdk 24 (diuji di Android 9 / API 28). Tanpa library eksternal baru.
 
 ## Alur data
@@ -64,3 +66,21 @@ Satu sesi = satu file `ECGPPG_<yyyy-MM-dd_HHmmss>_<id>.csv`, format long/sparse 
 | `SessionRecorder` / `SessionRepository` / `CsvLoader` | Tulis, daftar, dan baca CSV |
 | `WaveformView` | Grafik: live mengikuti waktu; replay dengan cubit/geser/dobel-ketuk |
 | `DummySignalSource` | Pemutar dataset; opsi `simulateDrops`, `simulateLeadOff` |
+
+## Versi iOS (`ios/`)
+
+Port SwiftUI dengan struktur dan nama kelas yang sama (iOS 17+, tanpa dependensi pihak ketiga). Semua logika berjalan di main actor; sumber dummy dan pemindai memakai `Task` + `Task.sleep` (tick 100 ms / 500 ms) sebagai pengganti `HandlerThread`/`Handler`.
+
+| Android (Kotlin) | iOS (Swift) |
+|---|---|
+| `MonitorEngine` + `Listener` | `MonitorEngine: ObservableObject` (`objectWillChange` per paket; `version` memicu gambar ulang grafik) |
+| `data/*`, `dsp/Dsp.kt` | `ECGPPG/Core/*.swift` (DSP port 1:1, format CSV/metadata sama) |
+| `WaveformView` (Canvas) | `WaveformChart` (SwiftUI `Canvas`; `DragGesture` + `MagnifyGesture`, jendela replay dibagi lewat `Binding`) |
+| `MainActivity` (bottom nav + drawer) | `ContentView` (`TabView` + sheet `SettingsView`) |
+| `Live/Devices/History/SettingsFragment`, `DetailActivity` | `LiveView`, `DevicesView`, `HistoryView`, `SettingsView`, `DetailView` |
+| `SharedPreferences` (`Prefs`) | `UserDefaults` (`Prefs`, `@AppStorage` dengan kunci sama) |
+| `filesDir/recordings` | `Documents/recordings` (terlihat di app Files) |
+| SAF `OpenDocumentTree` | `.fileImporter([.folder])` + security-scoped bookmark |
+| Toast | Banner `engine.toast` di atas layar |
+
+**Mengganti dummy dengan hardware (iOS):** buat `BleSignalSource: SignalSource` dan pemindai `DeviceScanner` berbasis CoreBluetooth (`CBCentralManager`, filter UUID layanan), lalu ubah `MonitorEngine.createSource()`; tambahkan `NSBluetoothAlwaysUsageDescription` di build setting Info.plist.
