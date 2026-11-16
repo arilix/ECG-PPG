@@ -29,7 +29,7 @@ Jalankan: `./gradlew --offline :app:testDebugUnitTest` (5 tes, lolos pada 2026-1
 ## Uji manual versi iOS — simulator iPhone 15 (iOS 26.5), Xcode 27.1
 - Build Debug (simulator) dan Release `iphoneos` arm64 tanpa tanda tangan berhasil tanpa error; `codesign -dv` pada `.app` Release: *not signed at all* (siap ditandatangani ulang oleh AltStore).
 - Sambungkan `ESP32_HEALTH_01` → grafik ECG/IR/Red berjalan; BPM ECG 72–74, BPM PPG 94, HRV (RMSSD) tampil; SpO₂ "--".
-- Rekam 29 dtk dengan simulasi paket hilang → sesi muncul di Riwayat; Detail: Durasi 0:29, BPM rata-rata 71, Gap 2 (ECG 1, PPG 1).
+- Rekam 29 dtk dengan simulasi paket hilang → sesi muncul di Riwayat; Detail: Durasi 0:29, BPM rata-rata 71, Gap 2 (ECG 1, PPG 1); grafik dibuka dengan jendela 10 dtk ("0:00 – 0:10 dari 0:29") dan slider posisi.
 - Tab Perangkat: pencarian otomatis, 6 perangkat, urutan kompatibel dulu lalu sinyal; badge "KOMPATIBEL · TERAKHIR".
 - Pengaturan (sheet) dan tema Gelap diperiksa. Tangkapan layar: `screenshot/ios/`.
 - Belum diuji di iPhone fisik, belum diuji pemilih folder salinan dan Bagikan.

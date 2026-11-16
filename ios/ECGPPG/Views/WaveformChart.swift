@@ -1,5 +1,13 @@
 import SwiftUI
 
+/// Membatasi jendela [lo, hi] agar berada di dalam `range` (lebar minimal 0,5 detik).
+func clampWindow(_ lo: Double, _ hi: Double, to range: ClosedRange<Double>) -> ClosedRange<Double> {
+    let dMin = range.lowerBound, dMax = max(range.upperBound, dMin + 1)
+    let span = min(max(hi - lo, 0.5), dMax - dMin)
+    let start = min(max(lo, dMin), dMax - span)
+    return start...(start + span)
+}
+
 /// Line chart ringan (tanpa library). Dua mode:
 /// - live  : jendela mengikuti sampel terbaru selebar `windowSec`.
 /// - replay: zoom (cubit), pan (geser), dobel-ketuk = tampilkan semua; jendela dibagi antar-grafik lewat `window`.
@@ -30,10 +38,11 @@ struct WaveformChart: View {
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         if let window {
             GeometryReader { geo in
+                // Simultan dengan ScrollView induk: geser mendatar = pan grafik, geser tegak tetap menggulir halaman.
                 canvas
                     .contentShape(Rectangle())
-                    .gesture(SimultaneousGesture(dragGesture(window, width: geo.size.width),
-                                                 zoomGesture(window, width: geo.size.width)))
+                    .simultaneousGesture(dragGesture(window, width: geo.size.width))
+                    .simultaneousGesture(zoomGesture(window, width: geo.size.width))
                     .onTapGesture(count: 2) { window.wrappedValue = dataRange }
             }
         } else {
@@ -44,15 +53,13 @@ struct WaveformChart: View {
     // ---- gestur (hanya mode replay) --------------------------------------------------------
 
     private func clamp(_ lo: Double, _ hi: Double) -> ClosedRange<Double> {
-        let dMin = dataRange.lowerBound, dMax = max(dataRange.upperBound, dMin + 1)
-        let span = min(max(hi - lo, 0.5), dMax - dMin)
-        let start = min(max(lo, dMin), dMax - span)
-        return start...(start + span)
+        clampWindow(lo, hi, to: dataRange)
     }
 
     private func dragGesture(_ window: Binding<ClosedRange<Double>>, width: CGFloat) -> some Gesture {
         DragGesture(minimumDistance: 8)
             .onChanged { v in
+                if dragStart == nil && abs(v.translation.height) > abs(v.translation.width) { return }
                 let start = dragStart ?? window.wrappedValue
                 if dragStart == nil { dragStart = start }
                 let span = start.upperBound - start.lowerBound

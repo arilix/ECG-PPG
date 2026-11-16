@@ -2,6 +2,14 @@
 
 Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 
+## 2026-11-16 — iOS: Detail rekaman bisa digeser ke samping
+
+**Diubah**
+- `ios/ECGPPG/Views/DetailView.swift`: grafik rekaman dibuka dengan jendela **10 detik** (bukan seluruh rekaman sekaligus yang membuat gelombang berdempetan). Kontrol baru: pilihan lebar jendela *5 dtk / 10 dtk / 30 dtk / Semua*, slider posisi waktu, dan label rentang (mis. "0:00 – 0:10 dari 0:29"). Ketiga grafik tetap sinkron.
+- `ios/ECGPPG/Views/WaveformChart.swift`: geser mendatar pada grafik = pindah waktu, geser tegak tetap menggulir halaman (gestur simultan dengan `ScrollView`); fungsi `clampWindow` dipakai bersama.
+- `ios/ECGPPG/Views/LiveView.swift`: teks tombol "Selesai Rekam" tidak lagi terpotong menjadi dua baris.
+- `release/ECGPPG-unsigned.ipa` dan `doc/screenshot/ios/` diperbarui.
+
 ## 2026-11-16 — Versi iOS (SwiftUI)
 
 **Ditambah**

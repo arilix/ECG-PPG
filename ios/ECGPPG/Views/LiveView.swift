@@ -134,6 +134,8 @@ struct LiveView: View {
                 }
             } label: {
                 Label(recording ? "Selesai Rekam" : "Mulai Rekam", systemImage: recording ? "stop.fill" : "record.circle")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(recording ? Color.white : Theme.onBrandContainer)
             }

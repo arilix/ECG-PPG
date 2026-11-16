@@ -20,6 +20,7 @@ struct DetailView: View {
                     MetricCard(title: "BPM rata-rata", value: loaded?.avgEcgBpm.map(String.init) ?? "--", unit: "", color: Theme.accentEcg)
                     MetricCard(title: "Gap", value: loaded.map { "\($0.ecgGaps + $0.ppgGaps)" } ?? "--", unit: "", color: Theme.statusWarn)
                 }
+                if loaded != nil { windowControls }
                 VStack(spacing: 10) {
                     WaveformChart(series: loaded?.ecg, title: "ECG", subtitle: "ADC 0–4095", color: Theme.chartEcg,
                                   message: loaded == nil ? (error ?? "Memuat CSV…") : nil,
@@ -35,7 +36,7 @@ struct DetailView: View {
                 Text(infoText)
                     .font(.footnote)
                     .foregroundStyle(error == nil ? Theme.textSecondary : Theme.statusBad)
-                Text("Cubit untuk zoom, geser untuk menggeser, ketuk dua kali untuk tampilkan semua.")
+                Text("Geser grafik ke samping atau pakai slider untuk berpindah waktu; cubit untuk zoom, ketuk dua kali untuk tampilkan semua.")
                     .font(.caption2)
                     .foregroundStyle(Theme.textSecondary)
             }
@@ -61,6 +62,59 @@ struct DetailView: View {
         .task { await load() }
     }
 
+    /// Lebar jendela awal (detik): cukup sempit agar bentuk gelombang tidak berdempetan.
+    private static let initialSpan = 10.0
+    private static let spans: [Double] = [5, 10, 30, 0]   // 0 = semua
+
+    private var span: Double { window.upperBound - window.lowerBound }
+    private var total: Double { dataRange.upperBound - dataRange.lowerBound }
+
+    /// Pilihan lebar jendela; cocok dengan zoom saat ini atau tidak ada yang terpilih (-1).
+    private var spanSelection: Binding<Double> {
+        Binding(
+            get: {
+                if abs(span - total) < 0.01 { return 0 }
+                return Self.spans.first { $0 > 0 && abs($0 - span) < 0.01 } ?? -1
+            },
+            set: { s in
+                let w = s == 0 ? total : s
+                window = clampWindow(window.lowerBound, window.lowerBound + w, to: dataRange)
+            })
+    }
+
+    /// Posisi awal jendela untuk slider.
+    private var position: Binding<Double> {
+        Binding(
+            get: { window.lowerBound },
+            set: { lo in window = clampWindow(lo, lo + span, to: dataRange) })
+    }
+
+    private var windowControls: some View {
+        let maxStart = dataRange.upperBound - span
+        return VStack(alignment: .leading, spacing: 8) {
+            Picker("Lebar jendela", selection: spanSelection) {
+                ForEach(Self.spans.filter { $0 == 0 || $0 < total }, id: \.self) { s in
+                    Text(s == 0 ? "Semua" : "\(Int(s)) dtk").tag(s)
+                }
+            }
+            .pickerStyle(.segmented)
+            HStack(spacing: 10) {
+                Image(systemName: "arrow.left.and.right")
+                    .foregroundStyle(Theme.textSecondary)
+                if maxStart > dataRange.lowerBound + 0.01 {
+                    Slider(value: position, in: dataRange.lowerBound...maxStart)
+                } else {
+                    Slider(value: .constant(0), in: 0...1).disabled(true)
+                }
+            }
+            Text("\(formatDuration(window.lowerBound)) – \(formatDuration(window.upperBound)) dari \(formatDuration(total))")
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(Theme.textSecondary)
+        }
+        .padding(12)
+        .card()
+    }
+
     private var infoText: String {
         if let error { return "Gagal membuka CSV: \(error)" }
         guard let s = loaded else { return "Memuat CSV…" }
@@ -80,7 +134,7 @@ struct DetailView: View {
             let lo = min(s.ecg.size > 0 ? s.ecg.firstX : .infinity, s.ir.size > 0 ? s.ir.firstX : .infinity)
             let hi = max(s.ecg.lastX, s.ir.lastX)
             dataRange = lo...max(hi, lo + 1)
-            window = dataRange
+            window = clampWindow(lo, lo + Self.initialSpan, to: dataRange)
             loaded = s
         case .failure(let e):
             error = e.localizedDescription
