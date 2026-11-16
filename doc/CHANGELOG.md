@@ -2,6 +2,15 @@
 
 Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 
+## 2026-11-16 — Ikon aplikasi
+
+**Ditambah / diubah**
+- Ikon launcher baru menggantikan ikon bawaan template: latar gradien teal (`#00897B` → `#004D40`), jantung putih, garis EKG (kompleks QRS) berwarna teal di tengahnya.
+- Adaptive icon (API 26+): `drawable/ic_launcher_background.xml`, `ic_launcher_foreground.xml` (isi dalam zona aman 66 dp), dan `ic_launcher_monochrome.xml` (kontur jantung + garis EKG untuk ikon bertema Android 13+); `mipmap-anydpi-v26/ic_launcher*.xml` memakai ketiganya.
+- Ikon lama (API 24–25): `mipmap-*/ic_launcher.png` dan `ic_launcher_round.png` (48–192 px) menggantikan berkas `.webp` bawaan.
+- `app/src/main/ic_launcher-playstore.png` (512 × 512) untuk toko aplikasi/materi publikasi.
+- Diuji di emulator Android 9: ikon tampil di daftar aplikasi.
+
 ## 2026-11-16 — Pilihan tema di drawer Pengaturan
 
 **Ditambah**
