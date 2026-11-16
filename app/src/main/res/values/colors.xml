@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Palet terang -->
+    <color name="bg">#F3F6F8</color>
+    <color name="card">#FFFFFF</color>
+    <color name="card_stroke">#E0E6EA</color>
+    <color name="text_secondary">#5F6B76</color>
+    <color name="brand">#00796B</color>
+    <color name="brand_container">#D2F0EA</color>
+    <color name="on_brand_container">#00332D</color>
+    <color name="accent_ecg">#14935A</color>
+    <color name="accent_ppg">#1E88C7</color>
+    <color name="accent_spo2">#D98200</color>
+    <color name="accent_hrv">#7E57C2</color>
+    <color name="status_ok">#14935A</color>
+    <color name="status_warn">#D98200</color>
+    <color name="status_bad">#D93C3C</color>
+
+    <!-- Grafik (selalu gelap seperti layar monitor) -->
+    <color name="chart_bg">#0F151B</color>
+    <color name="chart_ecg">#3DDC84</color>
+    <color name="chart_ir">#4FC3F7</color>
+    <color name="chart_red">#FF6E6E</color>
+</resources>

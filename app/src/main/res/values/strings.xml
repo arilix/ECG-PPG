@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ECG PPG Monitor</string>
+    <string name="nav_live">Live</string>
+    <string name="nav_devices">Perangkat</string>
+    <string name="nav_history">Riwayat</string>
+    <string name="share">Bagikan</string>
+    <string name="delete">Hapus</string>
+</resources>
