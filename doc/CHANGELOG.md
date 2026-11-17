@@ -2,6 +2,12 @@
 
 Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 
+## 2026-11-17 — Android: Detail rekaman dengan jendela waktu (disamakan dengan iOS)
+
+**Diubah**
+- `activity_detail.xml`, `DetailActivity.kt`, `WaveformView.kt`: grafik rekaman dibuka dengan jendela **10 detik** (sebelumnya seluruh rekaman sekaligus sehingga gelombang berdempetan). Kartu kontrol baru: pilihan lebar jendela *5s / 10s / 15s / 30s / Semua* (hanya satu yang terpilih; pilihan yang tidak lebih kecil dari durasi rekaman disembunyikan), slider posisi waktu, dan label rentang (mis. "0:00 – 0:10 dari 0:42"). Geser/cubit pada grafik ikut memperbarui tombol, slider, dan label; ketiga grafik tetap sinkron.
+- Status tombol lebar diatur manual dari lebar jendela sebenarnya agar tidak pernah ada dua tombol terpilih sekaligus.
+
 ## 2026-11-16 — iOS: Detail rekaman bisa digeser ke samping
 
 **Diubah**
@@ -25,6 +31,11 @@ Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 - Rekaman di `Documents/recordings` aplikasi, sehingga juga terlihat di app **Files** (*On My iPhone › ECG PPG Monitor*).
 - Folder salinan dipilih lewat pemilih folder Files (security-scoped bookmark), pengganti Storage Access Framework.
 - Metadata JSON ditulis dengan kunci terurut abjad; isi kolom sama.
+
+## 2026-11-16 — Presentasi (8 slide)
+
+**Ditambah**
+- `doc/Presentasi ECG-PPG.pptx` (8 slide, 16:9, bahasa Indonesia, tema teal senada ikon aplikasi): judul, latar belakang (angka WHO), arsitektur sistem, perangkat keras dan koreksi catu daya, hasil perhitungan perancangan, ragam bentuk sinyal ECG/PPG (rekaman nyata), purwarupa aplikasi (screenshot), serta hasil validasi dan langkah berikutnya. Tiap slide memuat catatan pembicara. Tanpa slide/daftar pustaka.
 
 ## 2026-11-16 — Ikon aplikasi
 

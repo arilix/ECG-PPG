@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/res-auto"
     android:id="@+id/detailRoot" android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
     <com.google.android.material.appbar.MaterialToolbar android:id="@+id/toolbar"
@@ -43,6 +44,37 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
+    <com.google.android.material.card.MaterialCardView android:id="@+id/cardWindow" style="@style/Card"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp" android:layout_marginTop="6dp" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="8dp">
+            <com.google.android.material.button.MaterialButtonToggleGroup android:id="@+id/toggleSpan"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:singleSelection="false">
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSpan5"
+                    style="?attr/materialButtonOutlinedStyle" android:checkable="true" android:insetTop="0dp" android:insetBottom="0dp" android:paddingHorizontal="2dp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="5s" android:textSize="12sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSpan10"
+                    style="?attr/materialButtonOutlinedStyle" android:checkable="true" android:insetTop="0dp" android:insetBottom="0dp" android:paddingHorizontal="2dp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="10s" android:textSize="12sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSpan15"
+                    style="?attr/materialButtonOutlinedStyle" android:checkable="true" android:insetTop="0dp" android:insetBottom="0dp" android:paddingHorizontal="2dp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="15s" android:textSize="12sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSpan30"
+                    style="?attr/materialButtonOutlinedStyle" android:checkable="true" android:insetTop="0dp" android:insetBottom="0dp" android:paddingHorizontal="2dp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="30s" android:textSize="12sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnSpanAll"
+                    style="?attr/materialButtonOutlinedStyle" android:checkable="true" android:insetTop="0dp" android:insetBottom="0dp" android:paddingHorizontal="2dp" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="Semua" android:textSize="12sp" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+            <SeekBar android:id="@+id/seekPos" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:max="1000" />
+            <TextView android:id="@+id/tvRange" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center" android:textColor="@color/text_secondary" android:textSize="12sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <TextView android:id="@+id/tvDetailInfo" android:layout_width="match_parent" android:layout_height="wrap_content"
         android:paddingHorizontal="14dp" android:paddingTop="8dp"
         android:textColor="@color/text_secondary" android:textSize="12sp" />
@@ -71,5 +103,5 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp"
         android:gravity="center" android:textColor="@color/text_secondary" android:textSize="11sp"
-        android:text="Cubit untuk zoom · geser untuk pan · ketuk dua kali untuk tampilkan semua" />
+        android:text="Geser grafik atau slider untuk pindah waktu · cubit untuk zoom · ketuk dua kali untuk tampilkan semua" />
 </LinearLayout>

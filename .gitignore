@@ -19,3 +19,5 @@ local.properties
 .~lock.*
 __pycache__/
 *.pyc
+/.venv-physionet/
+/data/physionet/

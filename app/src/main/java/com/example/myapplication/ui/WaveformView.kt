@@ -52,6 +52,14 @@ class WaveformView @JvmOverloads constructor(ctx: Context, attrs: AttributeSet? 
     private val padB get() = 22 * dp
     private val plotW get() = max(1f, width - padL - padR)
 
+    val windowMin get() = viewMin
+    val windowMax get() = viewMax
+
+    /** Atur jendela lalu clamp ke rentang data; memberi tahu pendengar. */
+    fun setWindowNotify(min: Double, max: Double) {
+        viewMin = min; viewMax = max; clampWindow(); invalidate(); onWindowChanged?.invoke(viewMin, viewMax)
+    }
+
     fun setWindow(min: Double, max: Double) { viewMin = min; viewMax = max; invalidate() }
 
     fun fitAll() {

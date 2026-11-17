@@ -10,6 +10,7 @@ Folder ini berisi catatan proyek dalam Markdown. Letaknya di **root proyek, di l
 | [PENGUJIAN.md](PENGUJIAN.md) | Hasil uji unit dan uji di emulator Android 9 |
 | `Proposal EKG - Revisi.pdf` / `.docx` | Proposal tugas akhir hasil revisi (51 halaman), dengan perhitungan, ragam bentuk sinyal, diagram wiring, dan purwarupa aplikasi |
 | `Portable ESP32 Health Monitor Wiring Diagram (Revisi Catu Daya).png` | Diagram wiring revisi (catu daya dikoreksi); file asli tetap ada |
+| `Presentasi ECG-PPG.pptx` | Presentasi 8 slide (dengan catatan pembicara) |
 | `screenshot/` | Tangkapan layar aplikasi Android (8 berkas); `screenshot/ios/` untuk versi iOS |
 | `validasi/` | Skrip validasi algoritma dan hasil mentah (JSON) |
 
