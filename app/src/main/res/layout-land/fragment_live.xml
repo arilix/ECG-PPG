@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:paddingHorizontal="12dp" android:paddingTop="8dp" android:paddingBottom="8dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center_vertical" android:orientation="horizontal" android:paddingHorizontal="4dp">
+        <ImageButton android:id="@+id/btnMenu" android:layout_width="40dp" android:layout_height="40dp"
+            android:layout_marginEnd="4dp" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Pengaturan" android:src="@drawable/ic_menu" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="ECG · PPG Monitor" android:textColor="?attr/colorOnSurface"
+                android:textSize="20sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tvSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:ellipsize="end" android:maxLines="1" android:textColor="@color/text_secondary" android:textSize="11sp" />
+        </LinearLayout>
+        <TextView android:id="@+id/tvRec" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp" android:textColor="@color/status_bad"
+            android:textSize="12sp" android:textStyle="bold" />
+        <TextView android:id="@+id/tvConn" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill" android:paddingHorizontal="12dp" android:paddingVertical="6dp"
+            android:text="● Terputus" android:textSize="12sp" android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:fillViewport="true" android:scrollbars="vertical">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout android:id="@+id/rowMetrics" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" android:orientation="horizontal">
+        <com.google.android.material.card.MaterialCardView style="@style/Card"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginHorizontal="3dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_horizontal" android:orientation="vertical"
+                android:paddingHorizontal="4dp" android:paddingVertical="10dp">
+                <TextView style="@style/Label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="ECG" android:textColor="@color/accent_ecg" />
+                <TextView android:id="@+id/tvEcgBpm" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" android:text="--" android:textColor="@color/accent_ecg"
+                    android:textSize="28sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="BPM" android:textColor="@color/text_secondary" android:textSize="10sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView style="@style/Card"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginHorizontal="3dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_horizontal" android:orientation="vertical"
+                android:paddingHorizontal="4dp" android:paddingVertical="10dp">
+                <TextView style="@style/Label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="PPG" android:textColor="@color/accent_ppg" />
+                <TextView android:id="@+id/tvPpgBpm" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" android:text="--" android:textColor="@color/accent_ppg"
+                    android:textSize="28sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="BPM" android:textColor="@color/text_secondary" android:textSize="10sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView style="@style/Card"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginHorizontal="3dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_horizontal" android:orientation="vertical"
+                android:paddingHorizontal="4dp" android:paddingVertical="10dp">
+                <TextView style="@style/Label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="SpO₂" android:textColor="@color/accent_spo2" />
+                <TextView android:id="@+id/tvSpo2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" android:text="--" android:textColor="@color/accent_spo2"
+                    android:textSize="28sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="belum aktif" android:textColor="@color/text_secondary" android:textSize="10sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView style="@style/Card"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginHorizontal="3dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_horizontal" android:orientation="vertical"
+                android:paddingHorizontal="4dp" android:paddingVertical="10dp">
+                <TextView style="@style/Label" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="HRV" android:textColor="@color/accent_hrv" />
+                <TextView android:id="@+id/tvHrv" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp" android:text="--" android:textColor="@color/accent_hrv"
+                    android:textSize="28sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="RMSSD ms" android:textColor="@color/text_secondary" android:textSize="10sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <TextView android:id="@+id/tvInfo" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:paddingHorizontal="4dp"
+        android:textColor="@color/text_secondary" android:textSize="11sp" />
+
+    <com.google.android.material.card.MaterialCardView style="@style/ChartCard"
+        android:layout_width="match_parent" android:layout_height="200dp"
+        android:layout_marginTop="8dp">
+        <com.example.myapplication.ui.WaveformView android:id="@+id/chEcg"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView style="@style/ChartCard"
+        android:layout_width="match_parent" android:layout_height="170dp"
+        android:layout_marginTop="8dp">
+        <com.example.myapplication.ui.WaveformView android:id="@+id/chIr"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView style="@style/ChartCard"
+        android:layout_width="match_parent" android:layout_height="170dp"
+        android:layout_marginTop="8dp">
+        <com.example.myapplication.ui.WaveformView android:id="@+id/chRed"
+            android:layout_width="match_parent" android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnConnect"
+            android:layout_width="0dp" android:layout_height="56dp" android:layout_weight="1"
+            android:layout_marginEnd="5dp" android:text="Sambungkan"
+            app:cornerRadius="16dp" app:icon="@drawable/ic_link" xmlns:app="http://schemas.android.com/apk/res-auto" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnRecord"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp" android:layout_height="56dp" android:layout_weight="1"
+            android:layout_marginStart="5dp" android:text="Mulai Rekam"
+            app:cornerRadius="16dp" app:icon="@drawable/ic_rec" xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </LinearLayout>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

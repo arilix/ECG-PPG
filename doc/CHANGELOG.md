@@ -2,6 +2,12 @@
 
 Format: tanggal · ringkasan · file terkait. Terbaru di atas.
 
+## 2026-11-17 — Android: layar bisa digulir saat dirotasi (landscape)
+
+**Diubah**
+- `layout/activity_detail.xml`: isi detail rekaman dibungkus `ScrollView`; tinggi grafik tetap (220/180/180 dp) sehingga di landscape grafik tidak menyusut dan halaman bisa digulir ke bawah.
+- `layout-land/fragment_live.xml` (baru): tab Live di landscape: header "ECG · PPG Monitor" (menu, subjudul, status koneksi) tetap di atas, sedangkan kartu metrik, grafik (tinggi tetap 200/170/170 dp), dan tombol berada dalam `ScrollView`. Mode portrait tidak berubah.
+
 ## 2026-11-17 — Android: Detail rekaman dengan jendela waktu (disamakan dengan iOS)
 
 **Diubah**
